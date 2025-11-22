@@ -44,27 +44,31 @@ export default function Slider() {
         }}
         pagination={{
           clickable: true,
-          bulletActiveClass: "swiper-pagination-bullet-active !bg-pink-600",
-          bulletClass: "swiper-pagination-bullet !bg-gray-400",
+          bulletActiveClass: "swiper-pagination-bullet-active !bg-white",
+          bulletClass: "swiper-pagination-bullet !bg-gray-100",
         }}
         navigation={{
           prevEl: ".swiper-button-prev-custom",
           nextEl: ".swiper-button-next-custom",
         }}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
-        className="w-full h-[300px] md:h-[400px] lg:h-[400px]"
+        className="w-full h-[250px] md:h-[300px] lg:h-[340px]"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div className={`relative w-full h-full ${slide.bgGradient}`}>
+            <div
+              className={`relative w-full h-full select-none ${slide.bgGradient}`}
+            >
               <Image
                 src={slide.image || "/fallback.jpg"}
                 alt={slide.title}
                 fill
-                className="object-cover opacity-90"
+                className="object-cover"
                 priority
                 sizes="100vw"
               />
+              <div className="absolute inset-0 bg-black/30" />
+
               <div className="relative z-10 flex h-full items-center container mx-auto px-15 sm:px-12 md:px-16 lg:px-5">
                 <div className="flex-1 text-left">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 tracking-tighter drop-shadow-2xl">
@@ -109,25 +113,25 @@ export default function Slider() {
             />
             <defs>
               <linearGradient id="gradient">
-                <stop offset="0%" stopColor="#cd1f1f" />
-                <stop offset="100%" stopColor="#cb2424" />
+                <stop offset="0%" stopColor="#ebe5e5" />
+                <stop offset="100%" stopColor="#f3f0f0" />
               </linearGradient>
             </defs>
           </svg>
           <span
-            className="absolute inset-0 flex items-center justify-center text-white font-mono text-md"
+            className="absolute inset-0 flex items-center justify-center text-white font-mono text-xs md:text-sm"
             ref={progressContent}
           />
         </div>
       </Swiper>
       <button
-        className="swiper-button-prev-custom absolute left-4 top-1/2 -translate-y-1/2 z-30 w-7 h-7 lg:w-10 lg:h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl hover:bg-white transition-all group"
+        className="swiper-button-prev-custom absolute left-4 top-1/2 cursor-pointer -translate-y-1/2 z-30 w-7 h-7 lg:w-10 lg:h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl hover:bg-white transition-all group"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-4 h-4 lg:w-6 lg:h-6 text-gray-800 group-hover:text-pink-600 transition-colors" />
       </button>
       <button
-        className="swiper-button-next-custom absolute right-4 top-1/2 -translate-y-1/2 z-30 w-7 h-7 lg:w-10 lg:h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl hover:bg-white transition-all group"
+        className="swiper-button-next-custom absolute right-4 top-1/2 cursor-pointer -translate-y-1/2 z-30 w-7 h-7 lg:w-10 lg:h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl hover:bg-white transition-all group"
         aria-label="Next slide"
       >
         <ChevronRight className="w-4 h-4 lg:w-6 lg:h-6 text-gray-800 group-hover:text-pink-600 transition-colors" />
