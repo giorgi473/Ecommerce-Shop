@@ -207,7 +207,6 @@ export default function Header() {
                 </Link>
               ))}
             </div>
-
             <div className="flex items-center gap-4 text-sm w-90 text-black">
               <Rocket className="h-5 w-5" />
               Free International Delivery

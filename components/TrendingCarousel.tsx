@@ -20,8 +20,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { products } from "@/data/data";
-
-export default function TrandingCarusel() {
+interface TrendingCarouselProps {
+  title?: string;
+}
+export default function TrandingCarusel({ title }: TrendingCarouselProps) {
   const [isLoading, setIsLoading] = useState(true);
   const prevButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -52,7 +54,9 @@ export default function TrandingCarusel() {
           </div>
         ) : (
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:w-full">
-            <h2 className="text-sm sm:text-lg font-bold text-gray-600">LATEST PRODUCTS</h2>
+            <h2 className="text-sm sm:text-lg font-bold text-gray-600 uppercase">
+              {title}
+            </h2>
             <button className="text-md w-fit bg-gray-100 hover:bg-gray-200 transition-all duration-300 ease-in-out px-3 py-1 rounded-sm flex items-center gap-1 cursor-pointer">
               Wiew All <ArrowRight size={17} />
             </button>

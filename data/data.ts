@@ -262,3 +262,39 @@ export const products = [
     image: ["/images/saxli.png", "/images/bla.png"],
   },
 ];
+
+export const blogPosts = [
+  {
+    id: 1,
+    title: "sustainable living through cutting-edge prefabricated homes",
+    description:
+      "Give2 lady of they such they sure it. Me contained explained my education. Vulgar as he...",
+    image: "/images/discover-unique-georgia.webp",
+    date: "2025-03-12",
+  },
+  {
+    id: 2,
+    title:
+      "Explore sustainable living through cutting-edge prefabricated homes",
+    description:
+      "Give2 lady of they such they sure it. Me contained explained my education. Vulgar as hearts by garr...",
+    image: "/images/discover-unique-georgia.webp",
+    date: "2025-03-12",
+  },
+  {
+    id: 3,
+    title: "This prefabrice passive house is highly sustainable",
+    description:
+      "Give lady of they such they sure it. Me contained explained my education. Vulgar as hearts by g...",
+    image: "/images/discover-unique-georgia.webp",
+    date: "2025-03-12",
+  },
+  {
+    id: 4,
+    title: "This prefabrice passive house is memorable highly sustainable",
+    description:
+      "Give lady of they such they sure it. Me contained explained my education. Vulgar as hearts by g...",
+    image: "/images/discover-unique-georgia.webp",
+    date: "2025-03-12",
+  },
+];

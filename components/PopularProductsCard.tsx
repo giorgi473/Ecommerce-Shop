@@ -156,7 +156,6 @@ export default function PopularProductsCard() {
                 scrollbar-width: none;
               }
             `}</style>
-
             {isLoading
               ? Array.from({ length: 1 }).map((_, i) => (
                   <div key={i} className="overflow-hidden">
