@@ -132,3 +132,6 @@
   z-index: 50px;
   cursor: pointer;
 }
+.scrollbar::-webkit-scrollbar {
+  width: 4px;
+}

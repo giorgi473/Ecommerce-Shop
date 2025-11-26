@@ -26,17 +26,82 @@ interface Category {
 }
 
 const categories: Category[] = [
-  { title: "Fashion", href: "/fashion" },
-  { title: "Electronics", href: "/electronics" },
-  { title: "Bags", href: "/bags" },
-  { title: "Footwear", href: "/footwear" },
-  { title: "Groceries", href: "/groceries" },
-  { title: "Beauty", href: "/beauty" },
-  { title: "Wellness", href: "/wellness" },
-  { title: "Jewellery", href: "/jewellery" },
-  { title: "Gio", href: "/gio" },
-  { title: "Pariko", href: "/patiko" },
-  { title: "Gurami", href: "/gurami" },
+  {
+    title: "Video Security",
+    href: "/video-security",
+  },
+  {
+    title: "Fire Safety",
+    href: "/fire-safety",
+  },
+  {
+    title: "Evacuation system",
+    href: "/evacuation-system",
+  },
+  {
+    title: "Access Control",
+    href: "/access-control",
+  },
+  {
+    title: "Intrusion Alarm System",
+    href: "/intrusion-alarm-system",
+  },
+  {
+    title: "Smart Home",
+    href: "/smart-home",
+  },
+  {
+    title: "Wellness",
+    href: "/wellness",
+  },
+  {
+    title: "Network Device",
+    href: "/network-device",
+  },
+  {
+    title: "Network Passive Components",
+    href: "/network-passive-components",
+  },
+  {
+    title: "Fiber Optic Network",
+    href: "/fiber-optic-network",
+  },
+  {
+    title: "Optic Passive Component",
+    href: "/optic-passive-component",
+  },
+  {
+    title: "VoIP",
+    href: "/voip",
+  },
+  {
+    title: "Server",
+    href: "/server",
+  },
+  {
+    title: "Cable",
+    href: "/cable",
+  },
+  {
+    title: "Data Storage",
+    href: "/data-storage",
+  },
+  {
+    title: "Monitor",
+    href: "/monitor",
+  },
+  {
+    title: "Solar Energy",
+    href: "/solar-energy",
+  },
+  {
+    title: "UPS",
+    href: "/ups",
+  },
+  {
+    title: "Electrical Equipment",
+    href: "/electrical-equipment",
+  },
 ];
 
 export default function PopularProductsCard() {
@@ -140,7 +205,7 @@ export default function PopularProductsCard() {
         <div className="relative w-full lg:w-1/2 flex items-center">
           <div
             ref={categoriesRef}
-            className="flex gap-6 sm:gap-8 md:gap-8 overflow-x-auto scrollbar-hide scroll-smooth w-full select-none"
+            className="flex gap-6 sm:gap-7 md:gap-7 overflow-x-auto scrollbar-hide scroll-smooth w-full select-none"
             style={{ cursor: isLoading ? "default" : "grab" }}
             onMouseDown={startDrag}
             onMouseMove={whileDrag}
