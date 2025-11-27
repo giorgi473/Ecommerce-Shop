@@ -169,8 +169,8 @@ export default function Header() {
 
   return (
     <React.Fragment>
-      <div className="hidden lg:block sticky top-0 z-50 bg-white shadow-xs">
-        <header className="border-b">
+      <div className="hidden lg:block sticky top-0 z-50 bg-white">
+        <header>
           <div className="container mx-auto px-4 flex items-center h-20 justify-between">
             <Link href="/">
               <Image
@@ -231,7 +231,7 @@ export default function Header() {
             </div>
           </div>
         </header>
-        <nav className="border-b bg-white relative">
+        <nav className="bg-white relative">
           <div className="container mx-auto pl-4 flex items-center justify-between h-14 text-sm font-medium text-gray-700">
             <div className="flex items-center gap-8 pr-2">
               <Button
@@ -447,7 +447,7 @@ export default function Header() {
         </nav>
       </div>
       <div className="lg:hidden fixed inset-0 flex flex-col z-50 pointer-events-none">
-        <div className="pointer-events-auto bg-white shadow-md border-b">
+        <div className="pointer-events-auto bg-white">
           <div className="flex items-center justify-between h-16 px-4">
             <button onClick={() => setIsOpen(true)}>
               <Menu className="h-6 w-6 cursor-pointer" />
