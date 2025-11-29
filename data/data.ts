@@ -298,3 +298,87 @@ export const blogPosts = [
     date: "2025-03-12",
   },
 ];
+
+interface Category {
+  title: string;
+  href: string;
+}
+
+export const categories: Category[] = [
+  {
+    title: "Video Security",
+    href: "/video-security",
+  },
+  {
+    title: "Fire Safety",
+    href: "/fire-safety",
+  },
+  {
+    title: "Evacuation system",
+    href: "/evacuation-system",
+  },
+  {
+    title: "Access Control",
+    href: "/access-control",
+  },
+  {
+    title: "Intrusion Alarm System",
+    href: "/intrusion-alarm-system",
+  },
+  {
+    title: "Smart Home",
+    href: "/smart-home",
+  },
+  {
+    title: "Wellness",
+    href: "/wellness",
+  },
+  {
+    title: "Network Device",
+    href: "/network-device",
+  },
+  {
+    title: "Network Passive Components",
+    href: "/network-passive-components",
+  },
+  {
+    title: "Fiber Optic Network",
+    href: "/fiber-optic-network",
+  },
+  {
+    title: "Optic Passive Component",
+    href: "/optic-passive-component",
+  },
+  {
+    title: "VoIP",
+    href: "/voip",
+  },
+  {
+    title: "Server",
+    href: "/server",
+  },
+  {
+    title: "Cable",
+    href: "/cable",
+  },
+  {
+    title: "Data Storage",
+    href: "/data-storage",
+  },
+  {
+    title: "Monitor",
+    href: "/monitor",
+  },
+  {
+    title: "Solar Energy",
+    href: "/solar-energy",
+  },
+  {
+    title: "UPS",
+    href: "/ups",
+  },
+  {
+    title: "Electrical Equipment",
+    href: "/electrical-equipment",
+  },
+];

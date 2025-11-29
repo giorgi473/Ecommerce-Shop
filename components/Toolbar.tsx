@@ -11,11 +11,19 @@ import {
 interface ToolbarProps {
   viewMode: "grid" | "list";
   setViewMode: (mode: "grid" | "list") => void;
+  sortBy: string;
+  setSortBy: (value: string) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   products: Array<any>;
 }
 
-function Toolbar({ viewMode, setViewMode, products }: ToolbarProps) {
+function Toolbar({
+  viewMode,
+  setViewMode,
+  sortBy,
+  setSortBy,
+  products,
+}: ToolbarProps) {
   return (
     <div className="flex items-center justify-between bg-gray-50 pl-2 pr-4 py-4 z-20 mt-29 lg:mt-0 lg:sticky lg:top-[136px]">
       <div className="flex items-center gap-2">
@@ -47,7 +55,7 @@ function Toolbar({ viewMode, setViewMode, products }: ToolbarProps) {
       </div>
       <div className="flex items-center gap-2">
         <span className="text-xs hidden sm:flex">Sort By</span>
-        <Select defaultValue="name-asc">
+        <Select value={sortBy} onValueChange={setSortBy}>
           <SelectTrigger className="w-34">
             <SelectValue />
           </SelectTrigger>

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -18,93 +19,65 @@ import {
   Eye,
   Share2,
 } from "lucide-react";
-import { products } from "@/data/data";
 
-interface Category {
+interface Product {
+  id: string;
+  title_ka: string;
+  description_short_ka: string;
+  price: number;
+  rating: number;
+  logo_image: string;
+  images: string[];
+}
+
+interface ProductType {
+  type_id: string;
+  type_name_ka: string;
+  products: Product[];
+}
+
+interface Subcategory {
+  subcategory_id: string;
+  subcategory_name_ka: string;
+  slug: string;
+  product_types: ProductType[];
+}
+
+interface ApiCategory {
+  category_id: string;
+  category_name_ka: string;
+  slug: string;
+  subcategories: Subcategory[];
+}
+
+interface FormattedCategory {
+  id: string;
   title: string;
   href: string;
 }
 
-const categories: Category[] = [
-  {
-    title: "Video Security",
-    href: "/video-security",
-  },
-  {
-    title: "Fire Safety",
-    href: "/fire-safety",
-  },
-  {
-    title: "Evacuation system",
-    href: "/evacuation-system",
-  },
-  {
-    title: "Access Control",
-    href: "/access-control",
-  },
-  {
-    title: "Intrusion Alarm System",
-    href: "/intrusion-alarm-system",
-  },
-  {
-    title: "Smart Home",
-    href: "/smart-home",
-  },
-  {
-    title: "Wellness",
-    href: "/wellness",
-  },
-  {
-    title: "Network Device",
-    href: "/network-device",
-  },
-  {
-    title: "Network Passive Components",
-    href: "/network-passive-components",
-  },
-  {
-    title: "Fiber Optic Network",
-    href: "/fiber-optic-network",
-  },
-  {
-    title: "Optic Passive Component",
-    href: "/optic-passive-component",
-  },
-  {
-    title: "VoIP",
-    href: "/voip",
-  },
-  {
-    title: "Server",
-    href: "/server",
-  },
-  {
-    title: "Cable",
-    href: "/cable",
-  },
-  {
-    title: "Data Storage",
-    href: "/data-storage",
-  },
-  {
-    title: "Monitor",
-    href: "/monitor",
-  },
-  {
-    title: "Solar Energy",
-    href: "/solar-energy",
-  },
-  {
-    title: "UPS",
-    href: "/ups",
-  },
-  {
-    title: "Electrical Equipment",
-    href: "/electrical-equipment",
-  },
-];
+interface FormattedProduct {
+  id: string;
+  title: string;
+  brand: string;
+  rating: number;
+  price: number;
+  image: string[];
+  discount?: number;
+  discountedPrice: number;
+  originalPrice?: number;
+}
+
+interface CategorizedProducts {
+  [categoryId: string]: FormattedProduct[];
+}
 
 export default function PopularProductsCard() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const router = useRouter();
+  const [categories, setCategories] = useState<FormattedCategory[]>([]);
+  const [categorizedProducts, setCategorizedProducts] =
+    useState<CategorizedProducts>({});
   const [activeCategory, setActiveCategory] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const categoriesRef = useRef<HTMLDivElement>(null);
@@ -121,17 +94,60 @@ export default function PopularProductsCard() {
     }
   }, [isLoading]);
 
+  // Fetch API data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/blog");
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data: ApiCategory[] = await response.json();
+
+        // Format categories
+        const formattedCategories = data.map((cat) => ({
+          id: cat.category_id,
+          title: cat.category_name_ka,
+          href: `/products?catId=${cat.category_id}`,
+        }));
+        setCategories(formattedCategories);
+
+        // Format products by category
+        const productsByCategory: CategorizedProducts = {};
+        data.forEach((cat) => {
+          const categoryProducts: FormattedProduct[] = [];
+          cat.subcategories.forEach((sub) => {
+            sub.product_types.forEach((type) => {
+              type.products.forEach((prod) => {
+                categoryProducts.push({
+                  id: prod.id,
+                  title: prod.title_ka,
+                  brand: type.type_name_ka,
+                  rating: Math.floor(prod.rating),
+                  price: prod.price,
+                  image: [prod.logo_image, ...(prod.images || [])],
+                  discountedPrice: prod.price,
+                });
+              });
+            });
+          });
+          productsByCategory[cat.category_id] = categoryProducts;
+        });
+        setCategorizedProducts(productsByCategory);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const isDragging = useRef(false);
   const startX = useRef(0);
   const scrollLeftStart = useRef(0);
   const velocity = useRef(0);
   const lastX = useRef(0);
   const rafId = useRef<number | null>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
 
   const startDrag = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!categoriesRef.current || isLoading) return;
@@ -179,6 +195,11 @@ export default function PopularProductsCard() {
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
   }, []);
+
+  const currentProducts =
+    activeCategory < categories.length
+      ? categorizedProducts[categories[activeCategory].id] || []
+      : [];
 
   return (
     <div className="w-full">
@@ -229,7 +250,7 @@ export default function PopularProductsCard() {
                 ))
               : categories.map((category, index) => (
                   <button
-                    key={category.href}
+                    key={category.id}
                     onClick={() => setActiveCategory(index)}
                     className={`whitespace-nowrap pb-3 text-xs font-semibold transition-all duration-300 border-b-2 shrink-0 ${
                       index === activeCategory
@@ -302,7 +323,7 @@ export default function PopularProductsCard() {
                   </Card>
                 </SwiperSlide>
               ))
-            : products.map((product) => (
+            : currentProducts.map((product) => (
                 <SwiperSlide key={product.id} className="h-full">
                   <HoverImageCard product={product} />
                 </SwiperSlide>
@@ -313,7 +334,7 @@ export default function PopularProductsCard() {
   );
 }
 
-function HoverImageCard({ product }: { product: (typeof products)[number] }) {
+function HoverImageCard({ product }: { product: FormattedProduct }) {
   const [isHovered, setIsHovered] = useState(false);
   const currentImage =
     isHovered && product.image[1] ? product.image[1] : product.image[0];
@@ -367,16 +388,19 @@ function HoverImageCard({ product }: { product: (typeof products)[number] }) {
             {product.title}
           </h3>
           <div className="flex items-center gap-1 text-sm">
-            <span className="text-yellow-500">★★★★★</span>
+            <span className="text-yellow-500">
+              {"★".repeat(product.rating)}
+              {"☆".repeat(5 - product.rating)}
+            </span>
             <span className="text-gray-500">({product.rating})</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-gray-900">
-              ₹{product.discountedPrice.toLocaleString()}
+              ${product.discountedPrice.toFixed(2)}
             </span>
             {product.originalPrice && (
               <span className="text-sm text-gray-400 line-through">
-                ₹{product.originalPrice.toLocaleString()}
+                ${product.originalPrice.toFixed(2)}
               </span>
             )}
           </div>
