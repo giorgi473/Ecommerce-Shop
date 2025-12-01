@@ -31,6 +31,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import ShippingCart from "../modules/ShippingCart";
 
 interface Product {
   id: string;
@@ -300,18 +301,7 @@ export default function Header() {
                     5
                   </Badge>
                 </button>
-                <button className="relative p-2.5 rounded-full cursor-pointer transition-all duration-300 group hover:bg-gray-100 active:scale-95">
-                  <ShoppingCart className="h-6 w-6 group-hover:text-primary z-10" />
-                  <Badge
-                    className="absolute top-1.5 right-0.5 h-3 w-3 p-2 rounded-full
-                         text-primary-foreground text-xs font-medium
-                         flex items-center justify-center bg-gray-500
-                         group-hover:bg-red-600 group-hover:scale-110
-                         transition-all z-20"
-                  >
-                    5
-                  </Badge>
-                </button>
+                <ShippingCart />
               </div>
             </div>
           </div>
