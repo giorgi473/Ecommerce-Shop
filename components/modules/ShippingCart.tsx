@@ -38,8 +38,26 @@ export default function ShippingCartSheet() {
           <SheetTitle className="sr-only">Shopping Cart</SheetTitle>
 
           {items.length === 0 ? (
-            <div className="flex-1 flex items-center justify-center text-gray-500">
-              Your cart is empty
+            <div className="flex-1 flex flex-col items-center justify-center text-gray-500 px-6">
+              <div className="w-48 h-48 mb-2 relative">
+                <Image
+                  src="/cartEmtyImage/empty-cart.png"
+                  alt="empty-cart-image"
+                  width={192}
+                  height={192}
+                  priority
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-6">
+                Your Cart is currently empty
+              </h2>
+              <Button
+                onClick={() => setIsOpen(false)}
+                className="bg-red-400 px-5 hover:bg-red-500 text-white py-2 text-xs rounded-sm"
+              >
+                CONTINUE SHOPPING
+              </Button>
             </div>
           ) : (
             <>
@@ -120,12 +138,12 @@ export default function ShippingCartSheet() {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3 pt-2 pb-4">
-                  <Button className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-5 text-base rounded-md">
+                  <Button className="flex-1 bg-red-500 hover:bg-red-600 text-white cursor-pointer font-semibold py-3 text-base rounded-md">
                     VIEW CART
                   </Button>
                   <Button
                     variant="outline"
-                    className="flex-1 border-2 border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600 font-semibold py-4.5 text-base bg-white rounded-md"
+                    className="flex-1 border-2 border-red-500 text-red-500 cursor-pointer hover:bg-red-50 hover:text-red-600 font-semibold py-3 text-base bg-white rounded-md"
                   >
                     CHECKOUT
                   </Button>

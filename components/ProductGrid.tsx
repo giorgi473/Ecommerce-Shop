@@ -1,5 +1,6 @@
-/* eslint-disable prefer-const */
 "use client";
+
+import type React from "react";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -11,6 +12,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ShoppingCart, Heart, Eye, Share2 } from "lucide-react";
 import Toolbar from "@/components/Toolbar";
 import ProductListItem from "@/components/modules/ProductListItem";
+import { useHeart } from "@/context/HeartContext";
+import { toast } from "sonner";
 
 interface Product {
   id: string;
@@ -61,6 +64,7 @@ export function ProductGrid() {
     []
   );
   const [loading, setLoading] = useState(true);
+  // const { addToHeart, removeFromHeart, isInHeart } = useHeart();
 
   // დალაგების ფუნქცია
   const sortProducts = (
@@ -155,7 +159,7 @@ export function ProductGrid() {
           const response = await fetch("http://localhost:3000/api/blog");
           const data: ApiCategory[] = await response.json();
 
-          let categoryProducts: FormattedProduct[] = [];
+          const categoryProducts: FormattedProduct[] = [];
           const catIds = catId ? catId.split(",") : [];
 
           data.forEach((cat) => {
@@ -186,8 +190,8 @@ export function ProductGrid() {
             categoryProducts.length > 0 ? categoryProducts : products;
 
           if (minPrice || maxPrice) {
-            const min = parseInt(minPrice || "0");
-            const max = parseInt(maxPrice || "3530");
+            const min = Number.parseInt(minPrice || "0");
+            const max = Number.parseInt(maxPrice || "3530");
             result = result.filter((p) => p.price >= min && p.price <= max);
           }
 
@@ -206,8 +210,8 @@ export function ProductGrid() {
       fetchAndFilter();
     } else {
       if (minPrice || maxPrice) {
-        const min = parseInt(minPrice || "0");
-        const max = parseInt(maxPrice || "3530");
+        const min = Number.parseInt(minPrice || "0");
+        const max = Number.parseInt(maxPrice || "3530");
         filtered = filtered.filter((p) => p.price >= min && p.price <= max);
       }
 
@@ -333,9 +337,30 @@ function ProductCard({ product }: { product: FormattedProduct }) {
   const [isHovered, setIsHovered] = useState(false);
   const currentImage =
     isHovered && product.image[1] ? product.image[1] : product.image[0];
+  const { addToHeart, removeFromHeart, isInHeart } = useHeart();
+  const isLiked = isInHeart(product.id);
 
   const handleAddToCart = () => {
     router.push(`/product/${product.id}`);
+  };
+
+  const handleHeartClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isLiked) {
+      removeFromHeart(product.id);
+      toast.success("Removed from My List");
+    } else {
+      addToHeart({
+        id: product.id,
+        title_ka: product.title,
+        price: product.price,
+        image: product.image[0],
+        brand: product.brand,
+        rating: product.rating,
+        description: product.description,
+      });
+      toast.success("Added to My List");
+    }
   };
 
   return (
@@ -371,8 +396,19 @@ function ProductCard({ product }: { product: FormattedProduct }) {
               : "-translate-y-12 opacity-0"
           }`}
         >
-          <button className="bg-white hover:bg-red-400 text-gray-700 w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md">
-            <Heart className="w-3 h-3 lg:w-4 lg:h-4" />
+          <button
+            onClick={handleHeartClick}
+            className={`${
+              isLiked
+                ? "bg-red-400 text-white"
+                : "bg-white text-gray-700 hover:bg-red-400"
+            } w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md`}
+          >
+            <Heart
+              className={`w-3 h-3 lg:w-4 lg:h-4 ${
+                isLiked ? "fill-current" : ""
+              }`}
+            />
           </button>
           <button className="bg-white hover:bg-red-400 text-gray-700 w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md">
             <Eye className="w-3 h-3 lg:w-4 lg:h-4" />
