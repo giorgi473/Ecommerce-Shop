@@ -242,6 +242,7 @@ function Page() {
               </div>
             </div>
           </div>
+
           <div className="space-y-5">
             <div>
               {product.brand && (

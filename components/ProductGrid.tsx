@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -9,9 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ShoppingCart, Heart, Eye, Share2 } from "lucide-react";
+import { ShoppingCart, Heart, Share2 } from "lucide-react";
 import Toolbar from "@/components/Toolbar";
 import ProductListItem from "@/components/modules/ProductListItem";
+import ExpentButton from "@/components/ExpentButton";
 import { useHeart } from "@/context/HeartContext";
 import { toast } from "sonner";
 
@@ -396,6 +396,10 @@ function ProductCard({ product }: { product: FormattedProduct }) {
               : "-translate-y-12 opacity-0"
           }`}
         >
+          <ExpentButton product={product} />
+          <button className="bg-white hover:bg-red-400 text-gray-700 w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md">
+            <Share2 className="w-3 h-3 lg:w-4 lg:h-4" />
+          </button>
           <button
             onClick={handleHeartClick}
             className={`${
@@ -409,12 +413,6 @@ function ProductCard({ product }: { product: FormattedProduct }) {
                 isLiked ? "fill-current" : ""
               }`}
             />
-          </button>
-          <button className="bg-white hover:bg-red-400 text-gray-700 w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md">
-            <Eye className="w-3 h-3 lg:w-4 lg:h-4" />
-          </button>
-          <button className="bg-white hover:bg-red-400 text-gray-700 w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md">
-            <Share2 className="w-3 h-3 lg:w-4 lg:h-4" />
           </button>
         </div>
       </div>
