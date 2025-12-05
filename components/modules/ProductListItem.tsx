@@ -1,162 +1,13 @@
-// "use client";
-
-// import { useState } from "react";
-// import Image from "next/image";
-// import { motion, Variants } from "framer-motion";
-// import { Badge } from "@/components/ui/badge";
-// import { Card } from "@/components/ui/card";
-// import { ShoppingCart, Heart, Share2, Maximize2 } from "lucide-react";
-
-// interface FormattedProduct {
-//   id: string;
-//   title: string;
-//   description: string;
-//   brand: string;
-//   rating: number;
-//   price: number;
-//   image: string[];
-//   discount?: number;
-//   discountedPrice: number;
-//   originalPrice: number;
-// }
-
-// export default function ProductListItem({
-//   product,
-// }: {
-//   product: FormattedProduct;
-// }) {
-//   const [isHovered, setIsHovered] = useState(false);
-//   const currentImage =
-//     isHovered && product.image[1] ? product.image[1] : product.image[0];
-
-//   const containerVariants = {
-//     hidden: { opacity: 0 },
-//     visible: {
-//       opacity: 1,
-//       transition: {
-//         staggerChildren: 0,
-//       },
-//     },
-//   };
-
-//   const iconVariants: Variants = {
-//     hidden: { opacity: 0, y: -40 },
-//     visible: {
-//       opacity: 1,
-//       y: 0,
-//       transition: {
-//         duration: 0.1,
-//         ease: "easeOut",
-//       },
-//     },
-//     exit: { opacity: 0, y: -40, transition: { duration: 0.1 } },
-//   };
-
-//   return (
-//     <Card className="border-0 rounded-lg overflow-hidden bg-gray-50 p-3">
-//       <div className="flex gap-6">
-//         <div
-//           className="relative w-60 h-72 overflow-hidden bg-gray-100 rounded-lg shrink-0 group"
-//           onMouseEnter={() => setIsHovered(true)}
-//           onMouseLeave={() => setIsHovered(false)}
-//         >
-//           <Image
-//             src={currentImage || "/placeholder.svg"}
-//             alt={product.title}
-//             fill
-//             className="object-cover transition-all duration-500 ease-in-out group-hover:scale-110 cursor-pointer"
-//             sizes="300px"
-//           />
-//           <div className="absolute inset-0 bg-black/5 pointer-events-none" />
-//           {(product.discount ?? 0) > 0 && (
-//             <div className="absolute top-4 left-4 z-20">
-//               <Badge className="bg-red-500 text-white text-sm font-bold px-3 py-1">
-//                 {product.discount}%
-//               </Badge>
-//             </div>
-//           )}
-//           <motion.div
-//             className="absolute top-4 right-4 flex flex-col gap-4 z-30"
-//             variants={containerVariants}
-//             initial="hidden"
-//             animate={isHovered ? "visible" : "hidden"}
-//           >
-//             <motion.button
-//               variants={iconVariants}
-//               className="bg-white hover:bg-red-500 hover:text-white text-gray-700 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-lg"
-//             >
-//               <Maximize2 className="w-4 h-4" />
-//             </motion.button>
-//             <motion.button
-//               variants={iconVariants}
-//               className="bg-white hover:bg-red-500 hover:text-white text-gray-700 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-lg"
-//             >
-//               <Heart className="w-4 h-4" />
-//             </motion.button>
-//             <motion.button
-//               variants={iconVariants}
-//               className="bg-white hover:bg-red-500 hover:text-white text-gray-700 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-lg"
-//             >
-//               <Share2 className="w-4 h-4" />
-//             </motion.button>
-//           </motion.div>
-//         </div>
-//         <div className="flex-1 flex flex-col justify-between py-2">
-//           <div>
-//             <p className="text-sm text-gray-500 mb-2 font-medium">
-//               {product.brand}
-//             </p>
-//             <h2 className="text-lg text-black mb-4">{product.title}</h2>
-//             <p className="text-gray-600 text-sm leading-relaxed mb-6">
-//               {product.description}
-//             </p>
-//           </div>
-//           <div>
-//             <div className="flex flex-col gap-4">
-//               <div className="flex items-center gap-2">
-//                 <div className="flex gap-1">
-//                   {Array.from({ length: 5 }).map((_, i) => (
-//                     <span
-//                       key={i}
-//                       className={`text-xl ${
-//                         i < product.rating ? "text-yellow-400" : "text-gray-300"
-//                       }`}
-//                     >
-//                       ★
-//                     </span>
-//                   ))}
-//                 </div>
-//                 <span className="text-sm text-gray-600">
-//                   ({product.rating})
-//                 </span>
-//               </div>
-//               <div className="flex items-center gap-3">
-//                 <span className="text-gray-400 line-through text-lg">
-//                   ₹{product.originalPrice.toFixed(2)}
-//                 </span>
-//                 <span className="text-red-500 text-lg">
-//                   ₹{product.discountedPrice.toFixed(2)}
-//                 </span>
-//               </div>
-//               <button className="w-fit flex items-center text-red-500 border-red-500 hover:bg-red-50 hover:text-red-600 bg-white border font-semibold text-xs h-9 px-10 whitespace-nowrap transition-all duration-300 rounded-sm cursor-pointer">
-//                 <ShoppingCart className="w-5 h-5 mr-2" />
-//                 Add to Cart
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </Card>
-//   );
-// }
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { ShoppingCart, Heart, Share2, Maximize2 } from "lucide-react";
+import { ShoppingCart, Heart, Share2 } from "lucide-react";
+import ExpentButton from "@/components/ExpentButton";
+import { toast } from "sonner";
+import { useHeart } from "@/context/HeartContext";
 
 interface FormattedProduct {
   id: string;
@@ -177,31 +28,30 @@ export default function ProductListItem({
   product: FormattedProduct;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const { addToHeart, removeFromHeart, isInHeart } = useHeart();
+  const isLiked = isInHeart(product.id);
+
+  const handleHeartClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isLiked) {
+      removeFromHeart(product.id);
+      toast.success("Removed from My List");
+    } else {
+      addToHeart({
+        id: product.id,
+        title_ka: product.title,
+        price: product.price,
+        image: product.image[0],
+        brand: product.brand,
+        rating: product.rating,
+        description: product.description,
+      });
+      toast.success("Added to My List");
+    }
+  };
+
   const currentImage =
     isHovered && product.image[1] ? product.image[1] : product.image[0];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0,
-      },
-    },
-  };
-
-  const iconVariants: Variants = {
-    hidden: { opacity: 0, y: -40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.1,
-        ease: "easeOut",
-      },
-    },
-    exit: { opacity: 0, y: -40, transition: { duration: 0.1 } },
-  };
 
   return (
     <Card className="border-0 rounded-sm overflow-hidden bg-white lg:bg-gray-50 pt-0 lg:p-3 h-auto mb-5">
@@ -226,31 +76,32 @@ export default function ProductListItem({
               </Badge>
             </div>
           )}
-          <motion.div
-            className="absolute top-3 lg:top-4 right-3 lg:right-4 flex flex-col gap-2 lg:gap-4 z-30"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isHovered ? "visible" : "hidden"}
+          <div
+            className={`absolute top-4 right-3 flex flex-col gap-3 z-30 transition-all duration-400 ease-out ${
+              isHovered
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-12 opacity-0"
+            }`}
           >
-            <motion.button
-              variants={iconVariants}
-              className="bg-white hover:bg-red-500 hover:text-white text-gray-700 w-6 lg:w-8 h-6 lg:h-8 rounded-full flex items-center justify-center transition-all shadow-lg"
+            <ExpentButton product={product} />
+            <button className="bg-white hover:bg-red-400 text-gray-700 w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md">
+              <Share2 className="w-3 h-3 lg:w-4 lg:h-4" />
+            </button>
+            <button
+              onClick={handleHeartClick}
+              className={`${
+                isLiked
+                  ? "bg-red-400 text-white"
+                  : "bg-white text-gray-700 hover:bg-red-400"
+              } w-5 h-5 lg:w-7 lg:h-7 rounded-full flex items-center justify-center transition-all shadow-md`}
             >
-              <Maximize2 className="w-3 lg:w-4 h-3 lg:h-4" />
-            </motion.button>
-            <motion.button
-              variants={iconVariants}
-              className="bg-white hover:bg-red-500 hover:text-white text-gray-700 w-6 lg:w-8 h-6 lg:h-8 rounded-full flex items-center justify-center transition-all shadow-lg"
-            >
-              <Heart className="w-3 lg:w-4 h-3 lg:h-4" />
-            </motion.button>
-            <motion.button
-              variants={iconVariants}
-              className="bg-white hover:bg-red-500 hover:text-white text-gray-700 w-6 lg:w-8 h-7 lg:h-8 rounded-full flex items-center justify-center transition-all shadow-lg"
-            >
-              <Share2 className="w-3 lg:w-4 h-3 lg:h-4" />
-            </motion.button>
-          </motion.div>
+              <Heart
+                className={`w-3 h-3 lg:w-4 lg:h-4 ${
+                  isLiked ? "fill-current" : ""
+                }`}
+              />
+            </button>
+          </div>
         </div>
         <div className="flex-1 flex flex-col justify-between px-4 pt-2 lg:py-2">
           <div>
