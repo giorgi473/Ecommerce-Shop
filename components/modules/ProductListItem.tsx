@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { ShoppingCart, Heart, Share2 } from "lucide-react";
+import { ShoppingCart, Heart, Share2, Loader2, Check } from "lucide-react";
 import ExpentButton from "@/components/ExpentButton";
 import { toast } from "sonner";
 import { useHeart } from "@/context/HeartContext";
-
+import { useCart } from "@/context/CartContext";
 interface FormattedProduct {
   id: string;
   title: string;
@@ -27,9 +28,41 @@ export default function ProductListItem({
 }: {
   product: FormattedProduct;
 }) {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   const { addToHeart, removeFromHeart, isInHeart } = useHeart();
+  const { isInCart, addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
   const isLiked = isInHeart(product.id);
+
+  const handleAddToCart = () => {
+    router.push(`/product/${product.id}`);
+  };
+
+  const handleAddToCart2 = () => {
+    if (product) {
+      if (isInCart(product.id)) {
+        toast.error("Item already in cart");
+        return;
+      }
+
+      setIsAddingToCart(true);
+
+      setTimeout(() => {
+        addToCart({
+          id: product.id,
+          title_ka: product.title,
+          price: product.price,
+          quantity: quantity,
+          image: product.image[0] || "/placeholder.svg",
+        });
+        setQuantity(1);
+        setIsAddingToCart(false);
+        toast.success("Item added successfully");
+      }, 500);
+    }
+  };
 
   const handleHeartClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -49,7 +82,7 @@ export default function ProductListItem({
       toast.success("Added to My List");
     }
   };
-
+  const productInCart = product ? isInCart(product.id) : false;
   const currentImage =
     isHovered && product.image[1] ? product.image[1] : product.image[0];
 
@@ -67,6 +100,7 @@ export default function ProductListItem({
             fill
             className="object-cover transition-all duration-500 ease-in-out group-hover:scale-110 cursor-pointer"
             sizes="(max-width: 1024px) 100vw, 300px"
+            onClick={handleAddToCart}
           />
           <div className="absolute inset-0 bg-black/5 pointer-events-none" />
           {(product.discount ?? 0) > 0 && (
@@ -142,9 +176,37 @@ export default function ProductListItem({
                   ₹{product.discountedPrice.toFixed(2)}
                 </span>
               </div>
-              <button className="w-full lg:w-fit flex items-center justify-center lg:justify-start text-red-500 border-red-500 hover:bg-red-50 hover:text-red-600 bg-white border font-semibold text-xs lg:text-sm h-8 lg:h-9 px-3 lg:px-10 whitespace-nowrap transition-all duration-300 rounded-sm cursor-pointer">
+              {/* <button className="w-full lg:w-fit flex items-center justify-center lg:justify-start text-red-500 border-red-500 hover:bg-red-50 hover:text-red-600 bg-white border font-semibold text-xs lg:text-sm h-8 lg:h-9 px-3 lg:px-10 whitespace-nowrap transition-all duration-300 rounded-sm cursor-pointer">
                 <ShoppingCart className="w-4 lg:w-5 h-4 lg:h-5 mr-2" />
                 Add to Cart
+              </button> */}
+              <button
+                onClick={handleAddToCart2}
+                disabled={isAddingToCart}
+                className={`h-10 w-fit rounded px-5 text-base font-semibold flex items-center justify-center gap-2 transition-colors min-w-[161px] ${
+                  productInCart
+                    ? "bg-red-400 cursor-pointer hover:bg-red-500"
+                    : isAddingToCart
+                    ? "bg-red-400 cursor-wait"
+                    : "bg-red-500 hover:bg-red-600 cursor-pointer"
+                } text-white`}
+              >
+                {isAddingToCart ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    ADDING...
+                  </>
+                ) : productInCart ? (
+                  <>
+                    <Check className="w-5 h-5" />
+                    ADDED
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-5 h-5" />
+                    ADD TO CART
+                  </>
+                )}
               </button>
             </div>
           </div>
