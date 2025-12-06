@@ -176,10 +176,6 @@ export default function ProductListItem({
                   ₹{product.discountedPrice.toFixed(2)}
                 </span>
               </div>
-              {/* <button className="w-full lg:w-fit flex items-center justify-center lg:justify-start text-red-500 border-red-500 hover:bg-red-50 hover:text-red-600 bg-white border font-semibold text-xs lg:text-sm h-8 lg:h-9 px-3 lg:px-10 whitespace-nowrap transition-all duration-300 rounded-sm cursor-pointer">
-                <ShoppingCart className="w-4 lg:w-5 h-4 lg:h-5 mr-2" />
-                Add to Cart
-              </button> */}
               <button
                 onClick={handleAddToCart2}
                 disabled={isAddingToCart}
@@ -188,7 +184,7 @@ export default function ProductListItem({
                     ? "bg-red-400 cursor-pointer hover:bg-red-500"
                     : isAddingToCart
                     ? "bg-red-400 cursor-wait"
-                    : "bg-red-500 hover:bg-red-600 cursor-pointer"
+                    : "bg-red-400 hover:bg-red-500 cursor-pointer"
                 } text-white`}
               >
                 {isAddingToCart ? (

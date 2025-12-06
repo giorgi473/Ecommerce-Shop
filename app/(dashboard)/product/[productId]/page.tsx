@@ -131,28 +131,22 @@ function Page() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="animate-pulse">
-          <div className="grid md:flex gap-8">
-            <div className="w-full md:w-1/2 space-y-4">
-              <div className="bg-gray-200 h-96 rounded-xl"></div>
-              <div className="grid grid-cols-5 gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="bg-gray-200 aspect-square rounded-lg"
-                  ></div>
-                ))}
-              </div>
-            </div>
-            <div className="md:w-1/2 space-y-6 mt-6 md:mt-0">
-              <div className="h-10 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-6 bg-gray-200 rounded w-1/3"></div>
-              <div className="space-y-3">
-                <div className="h-4 bg-gray-200 rounded"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
-                <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-              </div>
-            </div>
+        <div className=" flex items-center justify-center">
+          <div className="relative w-16 h-16">
+            <div
+              className="absolute inset-0 rounded-full border-4 border-transparent border-t-red-400 border-r-red-400 animate-spin"
+              style={{ animationDuration: "1.5s" }}
+            ></div>
+            <div
+              className="absolute inset-2 rounded-full border-4 border-transparent border-b-red-300 border-l-red-300 animate-spin"
+              style={{
+                animationDuration: "2s",
+                animationDirection: "reverse",
+                animationDelay: "0.2s",
+              }}
+            ></div>
+            <div className="absolute inset-6 rounded-full bg-red-400 animate-pulse shadow-lg shadow-red-400/50"></div>
+            <div className="absolute inset-10 rounded-full bg-red-300 shadow-md"></div>
           </div>
         </div>
       </div>
